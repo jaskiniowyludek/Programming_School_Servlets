@@ -137,8 +137,7 @@ public class User {
         }
     }
 
-    public static ArrayList<User> loadAllByGroupId(int user_group)        User[] users = new User[usersInGroup.size()];
-        users = usersInGroup.toArray(users);throws SQLException {
+    public static ArrayList<User> loadAllByGroupId(int user_group)throws SQLException {
         try (Connection conn = DbUtil.getConn()) {
             ArrayList<User> usersInGroup = new ArrayList<User>();
             String sql = "SELECT * FROM User WHERE user_group_id=?";
