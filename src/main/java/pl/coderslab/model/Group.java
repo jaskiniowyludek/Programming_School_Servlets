@@ -1,4 +1,4 @@
-package pl.coderslab.controller;
+package pl.coderslab.model;
 
 import pl.coderslab.services.DbUtil;
 

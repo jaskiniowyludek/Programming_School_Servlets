@@ -1,4 +1,4 @@
-package pl.coderslab.controller;
+package pl.coderslab.model;
 
 import org.mindrot.jbcrypt.BCrypt;
 import pl.coderslab.services.DbUtil;

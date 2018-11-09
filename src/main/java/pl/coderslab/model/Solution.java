@@ -1,4 +1,4 @@
-package pl.coderslab.controller;
+package pl.coderslab.model;
 
 import pl.coderslab.services.DbUtil;
 
@@ -107,6 +107,27 @@ public class Solution {
             ArrayList<Solution> solutions = new ArrayList<Solution>();
             PreparedStatement preparedStatement;
             preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Solution loadedSOL = new Solution();
+                loadedSOL.id = resultSet.getInt("id");
+                loadedSOL.created = resultSet.getTimestamp("created");
+                loadedSOL.updated = resultSet.getTimestamp("updated");
+                loadedSOL.description = resultSet.getString("description");
+                loadedSOL.user_id = resultSet.getInt("user_id");
+                loadedSOL.exercise_id = resultSet.getInt("exercise_id");
+                solutions.add(loadedSOL);
+            }
+            return solutions;
+        }
+    }
+    public static ArrayList<Solution> loadAllSolutions(int limit) throws SQLException{
+        try (Connection conn = DbUtil.getConn()) {
+            String sql = "SELECT * from Solution ORDER BY created LIMIT=?";
+            ArrayList<Solution> solutions = new ArrayList<Solution>();
+            PreparedStatement preparedStatement;
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, limit);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Solution loadedSOL = new Solution();
