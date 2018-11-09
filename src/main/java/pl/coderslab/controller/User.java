@@ -1,0 +1,160 @@
+package pl.coderslab.controller;
+
+import org.mindrot.jbcrypt.BCrypt;
+import pl.coderslab.services.DbUtil;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class User {
+    private int id = 0;
+    private String username;
+    private String password;
+    private String email;
+    private int user_group;
+
+    public int getUser_group() {
+        return user_group;
+    }
+
+    public void setUser_group(int user_group) {
+        this.user_group = user_group;
+    }
+
+    public	User(String	username, String	email, String	password, int user_group)	{
+        this.username	=	username;
+        this.email	=	email;
+        this.setPassword(password);
+        this.user_group = user_group;
+
+    }
+    public User(){}
+    public int getId(){
+        return id;
+    }
+
+    public void setUsername(String username){
+        this.username=username;
+    }
+    public String getUsername(){
+        return username;
+    }
+    public	void	setPassword(String	password)	{
+        this.password	=	BCrypt.hashpw(password,	BCrypt.gensalt());
+    }
+    public String getPassword(){
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public	void	saveToDB()	throws SQLException {
+        try (Connection conn = DbUtil.getConn()) {
+            if (this.id == 0) {
+                String sql = "INSERT	INTO User(username,	email,	password, user_group_id)	VALUES	(?,	?,	?, ?)";
+                String generatedColumns[] = {"ID"};
+                PreparedStatement preparedStatement;
+                preparedStatement = conn.prepareStatement(sql, generatedColumns);
+                preparedStatement.setString(1, this.username);
+                preparedStatement.setString(2, this.email);
+                preparedStatement.setString(3, this.password);
+                preparedStatement.setInt(4, this.user_group);
+                preparedStatement.executeUpdate();
+                ResultSet rs = preparedStatement.getGeneratedKeys();
+                if (rs.next()) {
+                    this.id = rs.getInt(1);
+                }
+            } else {
+                String sql = "UPDATE	User	SET	username=?,	email=?,	password=?, user_group_id=?	where	id	=	?";
+                PreparedStatement preparedStatement;
+                preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setString(1, this.username);
+                preparedStatement.setString(2, this.email);
+                preparedStatement.setString(3, this.password);
+                preparedStatement.setInt(4, this.user_group);
+                preparedStatement.setInt(5, this.id);
+                preparedStatement.executeUpdate();
+            }
+        }
+    }
+    static	public	User	loadUserById(int	id)	throws	SQLException {
+        try (Connection conn = DbUtil.getConn()) {
+            String sql = "SELECT	*	FROM	User	where	id=?";
+            PreparedStatement preparedStatement;
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                User loadedUser = new User();
+                loadedUser.id = resultSet.getInt("id");
+                loadedUser.username = resultSet.getString("username");
+                loadedUser.password = resultSet.getString("password");
+                loadedUser.email = resultSet.getString("email");
+                loadedUser.user_group = resultSet.getInt("user_group_id");
+                return loadedUser;
+            }
+            return null;
+        }
+    }
+    static	public	ArrayList<User>	loadAllUsers()	throws	SQLException {
+        try (Connection conn = DbUtil.getConn()) {
+            ArrayList<User> users = new ArrayList<User>();
+            String sql = "SELECT	*	FROM	User";
+            PreparedStatement preparedStatement;
+            preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                User loadedUser = new User();
+                loadedUser.id = resultSet.getInt("id");
+                loadedUser.username = resultSet.getString("username");
+                loadedUser.password = resultSet.getString("password");
+                loadedUser.email = resultSet.getString("email");
+                loadedUser.user_group = resultSet.getInt("user_group_id");
+                users.add(loadedUser);
+            }
+            return users;
+        }
+    }
+    public	void	delete()	throws	SQLException {
+        try (Connection conn = DbUtil.getConn()) {
+            if (this.id != 0) {
+                String sql = "DELETE	FROM	User	WHERE	id=	?";
+                PreparedStatement preparedStatement;
+                preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setInt(1, this.id);
+                preparedStatement.executeUpdate();
+                this.id = 0;
+            }
+        }
+    }
+
+    public static ArrayList<User> loadAllByGroupId(int user_group)        User[] users = new User[usersInGroup.size()];
+        users = usersInGroup.toArray(users);throws SQLException {
+        try (Connection conn = DbUtil.getConn()) {
+            ArrayList<User> usersInGroup = new ArrayList<User>();
+            String sql = "SELECT * FROM User WHERE user_group_id=?";
+            PreparedStatement preparedStatement;
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, user_group);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                User foundUser = new User();
+                foundUser.id = rs.getInt("id");
+                foundUser.username = rs.getString("username");
+                foundUser.email = rs.getString("email");
+                foundUser.user_group = rs.getInt("user_group_id");
+                usersInGroup.add(foundUser);
+            }
+            return usersInGroup;
+        }
+    }
+}
