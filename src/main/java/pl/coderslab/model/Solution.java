@@ -121,6 +121,23 @@ public class Solution {
             return solutions;
         }
     }
+
+    public int getExercise_id() {
+        return exercise_id;
+    }
+
+    public void setExercise_id(int exercise_id) {
+        this.exercise_id = exercise_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
     public static ArrayList<Solution> loadAllSolutions(int limit) throws SQLException{
         try (Connection conn = DbUtil.getConn()) {
             String sql = "SELECT * from Solution ORDER BY created LIMIT=?";
