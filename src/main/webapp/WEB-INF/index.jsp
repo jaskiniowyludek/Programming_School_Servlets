@@ -33,7 +33,7 @@
             <td>${solution.created}</td>
             <td>${solution.updated}</td>
             <td>${solution.description}</td>
-            <td><a href="index.jsp">Details</a> </td>
+            <td><a href="/solution?id=${solution.id}">Details</a> </td>
             </tr>
         </c:forEach>
 

@@ -11,6 +11,9 @@
     <title>Solutions</title>
 </head>
 <body>
+<%@include file="fragments/header.jsp"%>
+<h3>Exercise's description:</h3>
+<p>${solution.}</p>
 
 </body>
 </html>
