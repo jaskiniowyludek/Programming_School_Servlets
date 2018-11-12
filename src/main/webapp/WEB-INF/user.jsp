@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: ewelina
@@ -11,6 +12,25 @@
     <title>User's details</title>
 </head>
 <body>
+<%@include file="fragments/header.jsp"%>
+<h2>User's details:</h2>
+<ul>
+    <li>ID: ${user.id}</li>
+    <li>Login: ${user.username}</li>
+    <li>Email: ${user.email}</li>
+</ul>
+<h2>Solutions added by this user:</h2>
+<ul>
+    <li>
+    <c:forEach items="${solutions}" var="solution">
+        <ol>
+            <li>Exercise created: ${solution.created}</li>
+            <li>Solution added: ${solution.updated}</li>
+            <li>Solution: ${solution.description}</li>
+        </ol>
+    </c:forEach>
+    </li>
+</ul>
 
 </body>
 </html>
