@@ -12,6 +12,6 @@
 <body>
 <div><a href="/">Homepage</a></div>
 <div><a href="/group">Groups</a></div>
-<div><a href="">Admin Panel</a></div>
+<div><a href="/panelAdmin">Admin Panel</a></div>
 </body>
 </html>

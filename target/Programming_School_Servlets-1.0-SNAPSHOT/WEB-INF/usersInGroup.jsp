@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: ewelina
@@ -11,7 +12,19 @@
     <title>All users in this group</title>
 </head>
 <body>
-
+<%@include file="fragments/header.jsp"%>
+<h2>Users in this group:</h2>
+    <table border="3">
+        <th>LOGIN</th>
+        <th>EMAIL</th>
+        <c:forEach items="users" var="user">
+            <tr>
+                <td>${user.username}</td>
+                <td>${user.email}</td>
+                <td><a href="/userDetails?id=${user.id}">Details</a> </td>
+            </tr>
+        </c:forEach>
+    </table>
 </body>
 </html>
 <%--Ta	strona	ma	wyświetlać	listę	wszystkich	użytkowników	--%>

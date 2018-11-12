@@ -11,7 +11,8 @@
     <title>Admin website</title>
 </head>
 <body>
-
+<%@include file="fragments/headerAdmin.jsp"%>
+<h2>Welcome to admin website!</h2>
 </body>
 </html>
 <%--Panel	administracyjny--%>
