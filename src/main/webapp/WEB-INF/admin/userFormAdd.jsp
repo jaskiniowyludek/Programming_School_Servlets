@@ -19,7 +19,7 @@
         <input type="text" name="userName" placeholder="Type username">
         </div>
         <div>Password:
-        <input type="text" name="password" placeholder="Type password">
+        <input type="password" name="password" placeholder="Type password">
         </div>
         <div>Email:
         <input type="email" name="email" placeholder="Type email">

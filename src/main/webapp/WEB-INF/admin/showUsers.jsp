@@ -23,6 +23,7 @@
     <c:forEach items="${users}" var="user">
         <tr>
             <td>${user.username}</td>
+            <td>${user.email}</td>
             <td><a href="/panelAdmin/editUser?id=${user.id}">Edit</a></td>
             <td><a href="/panelAdmin/deleteUser?id=${user.id}"
                    onclick="return confirm('Are you sure you want to delete this user?');">Delete</a> </td>

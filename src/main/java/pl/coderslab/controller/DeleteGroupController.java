@@ -25,6 +25,6 @@ public class DeleteGroupController extends HttpServlet {
         }catch (SQLException e){
             e.printStackTrace();
         }
-        response.sendRedirect("/panelAdmin");
+        response.sendRedirect("/panelAdmin/groups");
     }
 }

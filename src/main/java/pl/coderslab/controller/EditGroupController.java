@@ -14,6 +14,15 @@ import java.sql.SQLException;
 public class EditGroupController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        int id = Integer.parseInt(request.getParameter("id"));
+        try {
+            Group group = Group.loadGroupById(id);
+            group.setName(request.getParameter("groupName"));
+            group.saveToDB();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        response.sendRedirect("/panelAdmin/groups");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,6 +35,6 @@ public class EditGroupController extends HttpServlet {
             e.printStackTrace();
         }
         request.setAttribute("group", group);
-        getServletContext().getRequestDispatcher("/WEB-INF/admin/groupForm.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/WEB-INF/admin/groupFromEdit.jsp").forward(request,response);
     }
 }

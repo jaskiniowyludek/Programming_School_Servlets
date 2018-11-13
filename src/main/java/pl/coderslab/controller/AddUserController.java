@@ -26,7 +26,7 @@ public class AddUserController extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        response.sendRedirect("/panelAdmin");
+        response.sendRedirect("/panelAdmin/allUsers");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
