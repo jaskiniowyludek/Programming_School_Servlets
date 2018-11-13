@@ -13,6 +13,24 @@ public class Solution {
     private String description;
     private int exercise_id;
     private int user_id;
+    private String username;
+    private String exerciseTitle;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getExerciseTitle() {
+        return exerciseTitle;
+    }
+
+    public void setExerciseTitle(String exerciseTitle) {
+        this.exerciseTitle = exerciseTitle;
+    }
 
     public Solution(){
     }
@@ -121,6 +139,28 @@ public class Solution {
             return solutions;
         }
     }
+    public static ArrayList<Solution> loadAllSolutionsWithUserAndTitle()throws SQLException{
+        try (Connection conn = DbUtil.getConn()){
+            String sql = "SELECT Solution.id, Exercise.title, Solution.exercise_id, User.username, Solution.created," +
+                    "Solution.description from Solution JOIN Exercise ON Solution.exercise_id=Exercise.id JOIN" +
+                    " User On Solution.user_id=User.id";
+            ArrayList<Solution> solutions = new ArrayList<Solution>();
+            PreparedStatement preparedStatement;
+            preparedStatement = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Solution loadedSOL = new Solution();
+                loadedSOL.id = resultSet.getInt("id");
+                loadedSOL.created = resultSet.getTimestamp("created");
+                loadedSOL.exerciseTitle = resultSet.getString("title");
+                loadedSOL.description = resultSet.getString("description");
+                loadedSOL.username = resultSet.getString("username");
+                loadedSOL.exercise_id = resultSet.getInt("exercise_id");
+                solutions.add(loadedSOL);
+            }
+            return solutions;
+        }
+     }
 
     public int getExercise_id() {
         return exercise_id;
@@ -218,7 +258,10 @@ public class Solution {
     public static ArrayList<Solution> loadAllByExerciseId(int exerciseID) throws SQLException {
         try (Connection conn = DbUtil.getConn()) {
             ArrayList<Solution> solutions = new ArrayList<Solution>();
-            String sql = "SELECT * FROM Solution WHERE exercise_id=? SORTED BY created DESC";
+            String sql = "SELECT Solution.id, " +
+                    "Solution.created, Solution.updated, Solution.description, Solution.user_id, " +
+                    "User.username FROM Solution " +
+                    "JOIN User On Solution.user_id=User.id WHERE exercise_id=?";
             PreparedStatement preparedStatement;
             preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, exerciseID);
@@ -229,8 +272,8 @@ public class Solution {
                 foundS.created = rs.getTimestamp("created");
                 foundS.updated = rs.getTimestamp("updated");
                 foundS.description = rs.getString("description");
+                foundS.username = rs.getString("username");
                 foundS.user_id = rs.getInt("user_id");
-                foundS.exercise_id = rs.getInt("exercise_id");
                 solutions.add(foundS);
             }
             return solutions;

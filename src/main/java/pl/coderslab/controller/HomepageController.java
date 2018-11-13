@@ -23,7 +23,7 @@ public class HomepageController extends HttpServlet {
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<Solution> solutions = Solution.loadAllSolutions();
+            List<Solution> solutions = Solution.loadAllSolutionsWithUserAndTitle();
             request.setAttribute("solutions", solutions);
             getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
         } catch (SQLException e) {

@@ -19,7 +19,7 @@
 <table border="5">
     <tr>
         <th>ID</th>
-        <th>EXERCISE'S NAME</th>
+        <th>EXERCISE'S TITLE</th>
         <th>AUTHOR</th>
         <th>CREATED</th>
         <th>UPDATED</th>
@@ -28,12 +28,12 @@
         <c:forEach items="${solutions}" var="solution">
             <tr>
             <td>${solution.id}</td>
-            <td>${solution.exercise_id}</td>
-            <td>${solution.user_id}</td>
+            <td>${solution.exerciseTitle}</td>
+            <td>${solution.username}</td>
             <td>${solution.created}</td>
             <td>${solution.updated}</td>
             <td>${solution.description}</td>
-            <td><a href="/solution?id=${solution.id}">Details</a> </td>
+            <td><a href="/solution?id=${solution.exercise_id}">Details</a> </td>
             </tr>
         </c:forEach>
 

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: ewelina
@@ -12,8 +13,25 @@
 </head>
 <body>
 <%@include file="fragments/header.jsp"%>
-<h3>Exercise's description:</h3>
-<p>${solution.}</p>
+    <h3>Exercise's title: </h3>
+    <p>${exercise.title}</p>
+    <h3>Exercise's description:</h3>
+    <p>${exercise.description}</p>
+    <h3>All solutions added: </h3>
+    <table border="3">
+        <th>SOLUTION ID</th>
+        <th>SOLUTION UPDATED</th>
+        <th>SOLUTION DESCRIPTION</th>
+        <th>USER</th>
+        <c:forEach items="${solutions}" var="solution">
+            <tr>
+                <td>${solution.id}</td>
+                <td>${solution.updated}</td>
+                <td>${solution.description}</td>
+                <td><a href="/users?id=${solution.user_id}">${solution.username}</a> </td>
+            </tr>
+        </c:forEach>
+    </table>
 
 </body>
 </html>

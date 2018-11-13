@@ -17,7 +17,7 @@
     <table border="3">
         <th>LOGIN</th>
         <th>EMAIL</th>
-        <c:forEach items="users" var="user">
+        <c:forEach items="${users}" var="user">
             <tr>
                 <td>${user.username}</td>
                 <td>${user.email}</td>
