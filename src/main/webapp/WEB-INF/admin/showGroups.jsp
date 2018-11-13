@@ -13,10 +13,9 @@
 </head>
 <body>
 <%@include file="../fragments/headerAdmin.jsp"%>
-<div>
-    <a href="/WEB-INF/admin/groupForm.jsp">Add new group</a>
-    <%--nie działa tak trzeba zrobić controller--%>
-</div>
+<p>
+    <a href="/panelAdmin/addGroup">Add new group</a>
+</p>
     <h2>See all groups:</h2>
     <table border="3">
         <th>NAME</th>

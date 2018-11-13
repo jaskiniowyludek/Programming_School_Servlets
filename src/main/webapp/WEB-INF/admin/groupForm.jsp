@@ -12,8 +12,13 @@
 </head>
 <body>
 <%@include file="../fragments/headerAdmin.jsp"%>
-    <form action="/panelAdmin" method="post">
-
+<h2>Group form:</h2>
+    <form action="/panelAdmin/addGroup" method="post">
+        <input type="hidden" name="id" value="${group.id}">
+        <div>
+            Group name:
+        </div>
+        <input type="text" name="groupName" value="${group.name}">
         <input type="submit" value="Save">
     </form>
 
