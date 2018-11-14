@@ -20,10 +20,12 @@
 <table border="3">
     <th>USERNAME</th>
     <th>EMAIL</th>
+    <th>ADD NEW EXERCISE</th>
     <c:forEach items="${users}" var="user">
         <tr>
             <td>${user.username}</td>
             <td>${user.email}</td>
+            <td><a href="/panelAdmin/addSolution?id=${user.id}">Add!</a> </td>
             <td><a href="/panelAdmin/editUser?id=${user.id}">Edit</a></td>
             <td><a href="/panelAdmin/deleteUser?id=${user.id}"
                    onclick="return confirm('Are you sure you want to delete this user?');">Delete</a> </td>

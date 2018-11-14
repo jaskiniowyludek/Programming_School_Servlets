@@ -19,6 +19,7 @@
     <li>Login: ${user.username}</li>
     <li>Email: ${user.email}</li>
 </ul>
+
 <h2>Solutions added by this user:</h2>
 <ul>
     <li>
