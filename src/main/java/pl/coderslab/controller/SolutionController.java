@@ -1,5 +1,7 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.ExerciseDao;
+import pl.coderslab.dao.SolutionDao;
 import pl.coderslab.model.Exercise;
 import pl.coderslab.model.Solution;
 
@@ -24,8 +26,8 @@ public class SolutionController extends HttpServlet {
         ArrayList<Solution> solutions = new ArrayList<>();
         Exercise exercise = null;
         try {
-            solutions = Solution.loadAllByExerciseId(id);
-            exercise = Exercise.loadById(id);
+            solutions = SolutionDao.loadAllByExerciseId(id);
+            exercise = ExerciseDao.loadById(id);
             request.setAttribute("solutions", solutions);
             request.setAttribute("exercise", exercise);
         } catch (SQLException e) {

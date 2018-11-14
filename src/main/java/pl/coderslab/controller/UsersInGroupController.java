@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.UserDao;
 import pl.coderslab.model.User;
 
 import javax.servlet.ServletException;
@@ -22,7 +23,7 @@ public class UsersInGroupController extends HttpServlet {
         ArrayList<User> users = new ArrayList<>();
         int id = Integer.parseInt(request.getParameter("id"));
         try {
-            users = User.loadAllByGroupId(id);
+            users = UserDao.loadAllByGroupId(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }

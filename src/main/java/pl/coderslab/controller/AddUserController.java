@@ -1,5 +1,7 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.GroupDao;
+import pl.coderslab.dao.UserDao;
 import pl.coderslab.model.Group;
 import pl.coderslab.model.User;
 
@@ -22,7 +24,7 @@ public class AddUserController extends HttpServlet {
         user.setEmail(request.getParameter("email"));
         user.setUser_group(Integer.parseInt(request.getParameter("userGroup")));
         try {
-            user.saveToDB();
+            UserDao.addUser(user);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -33,7 +35,7 @@ public class AddUserController extends HttpServlet {
 
         ArrayList<Group> groups = new ArrayList<>();
         try {
-            groups = Group.loadAllGroups();
+            groups = GroupDao.loadAllGroups();
         } catch (SQLException e) {
             e.printStackTrace();
         }

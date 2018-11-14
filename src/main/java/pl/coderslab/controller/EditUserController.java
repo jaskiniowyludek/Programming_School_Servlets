@@ -1,5 +1,7 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.GroupDao;
+import pl.coderslab.dao.UserDao;
 import pl.coderslab.model.Group;
 import pl.coderslab.model.User;
 
@@ -18,12 +20,12 @@ public class EditUserController extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
         try {
-            User user = User.loadUserById(id);
+            User user = UserDao.loadUserById(id);
             user.setUsername(request.getParameter("userName"));
             user.setEmail(request.getParameter("email"));
             user.setPassword(request.getParameter("password"));
             user.setUser_group(Integer.parseInt(request.getParameter("userGroup")));
-            user.saveToDB();
+            UserDao.updateUser(user);
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -36,8 +38,8 @@ public class EditUserController extends HttpServlet {
         User user = null;
         ArrayList<Group> groups = new ArrayList<>();
         try {
-            user = User.loadUserById(id);
-            groups = Group.loadAllGroups();
+            user = UserDao.loadUserById(id);
+            groups = GroupDao.loadAllGroups();
         }catch (SQLException e){
             e.printStackTrace();
         }

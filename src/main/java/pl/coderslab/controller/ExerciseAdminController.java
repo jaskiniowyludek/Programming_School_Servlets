@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.ExerciseDao;
 import pl.coderslab.model.Exercise;
 
 import javax.servlet.ServletException;
@@ -21,7 +22,7 @@ public class ExerciseAdminController extends HttpServlet {
 
         ArrayList<Exercise> exercises = new ArrayList<>();
         try {
-            exercises = Exercise.loadAllExercise();
+            exercises = ExerciseDao.loadAllExercise();
         }catch (SQLException e){
             e.printStackTrace();
         }

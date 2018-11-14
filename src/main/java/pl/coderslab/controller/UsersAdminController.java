@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.UserDao;
 import pl.coderslab.model.Group;
 import pl.coderslab.model.User;
 
@@ -22,7 +23,7 @@ public class UsersAdminController extends HttpServlet {
 
         ArrayList<User> users = new ArrayList<>();
         try {
-            users = User.loadAllUsers();
+            users = UserDao.loadAllUsers();
         } catch (SQLException e) {
             e.printStackTrace();
         }

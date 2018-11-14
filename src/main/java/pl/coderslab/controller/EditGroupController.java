@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.GroupDao;
 import pl.coderslab.model.Group;
 
 import javax.servlet.ServletException;
@@ -16,9 +17,9 @@ public class EditGroupController extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
         try {
-            Group group = Group.loadGroupById(id);
+            Group group = GroupDao.loadGroupById(id);
             group.setName(request.getParameter("groupName"));
-            group.saveToDB();
+            GroupDao.updateGroup(group);
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -30,7 +31,7 @@ public class EditGroupController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Group group = null;
         try {
-            group = Group.loadGroupById(id);
+            group = GroupDao.loadGroupById(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }

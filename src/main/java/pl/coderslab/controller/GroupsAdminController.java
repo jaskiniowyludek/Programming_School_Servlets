@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.GroupDao;
 import pl.coderslab.model.Group;
 
 import javax.servlet.ServletException;
@@ -20,7 +21,7 @@ public class GroupsAdminController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<Group> groups = new ArrayList<>();
         try {
-            groups = Group.loadAllGroups();
+            groups = GroupDao.loadAllGroups();
         } catch (SQLException e) {
             e.printStackTrace();
         }

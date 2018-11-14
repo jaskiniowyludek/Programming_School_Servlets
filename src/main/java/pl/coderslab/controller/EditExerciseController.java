@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.ExerciseDao;
 import pl.coderslab.model.Exercise;
 
 import javax.servlet.ServletException;
@@ -16,10 +17,10 @@ public class EditExerciseController extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
         try {
-            Exercise exercise = Exercise.loadById(id);
+            Exercise exercise = ExerciseDao.loadById(id);
             exercise.setTitle(request.getParameter("title"));
             exercise.setDescription(request.getParameter("description"));
-            exercise.saveToDB();
+            ExerciseDao.updateExercise(exercise);
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -31,7 +32,7 @@ public class EditExerciseController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Exercise exercise = null;
         try {
-            exercise = Exercise.loadById(id);
+            exercise = ExerciseDao.loadById(id);
         }catch (SQLException e){
             e.printStackTrace();
         }

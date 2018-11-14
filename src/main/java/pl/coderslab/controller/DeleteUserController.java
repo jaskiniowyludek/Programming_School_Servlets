@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.UserDao;
 import pl.coderslab.model.Group;
 import pl.coderslab.model.User;
 
@@ -20,8 +21,8 @@ public class DeleteUserController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         try {
-            User user = User.loadUserById(id);
-            user.delete();
+            User user = UserDao.loadUserById(id);
+            UserDao.delete(user);
         }catch (SQLException e){
             e.printStackTrace();
         }

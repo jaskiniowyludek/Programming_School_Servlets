@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.GroupDao;
 import pl.coderslab.model.Group;
 
 import javax.servlet.ServletException;
@@ -21,7 +22,7 @@ public class GroupController extends HttpServlet {
 
         ArrayList<Group> groups = new ArrayList<>();
         try {
-            groups = Group.loadAllGroups();
+            groups = GroupDao.loadAllGroups();
         } catch (SQLException e) {
             e.printStackTrace();
         }

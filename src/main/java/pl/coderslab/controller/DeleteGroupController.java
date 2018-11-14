@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.GroupDao;
 import pl.coderslab.model.Group;
 
 import javax.servlet.ServletException;
@@ -20,8 +21,8 @@ public class DeleteGroupController extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
         try {
-            Group group = Group.loadGroupById(id);
-            group.delete();
+            Group group = GroupDao.loadGroupById(id);
+            GroupDao.delete(group);
         }catch (SQLException e){
             e.printStackTrace();
         }

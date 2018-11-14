@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.GroupDao;
 import pl.coderslab.model.Group;
 
 import javax.servlet.ServletException;
@@ -17,7 +18,7 @@ public class AddGroupController extends HttpServlet {
         try {
             Group group = new Group();
             group.setName(request.getParameter("groupName"));
-            group.saveToDB();
+            GroupDao.addGroup(group);
         }
         catch (SQLException e) {
             e.printStackTrace();

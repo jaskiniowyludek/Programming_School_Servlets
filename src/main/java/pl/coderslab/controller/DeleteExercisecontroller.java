@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.ExerciseDao;
 import pl.coderslab.model.Exercise;
 
 import javax.servlet.ServletException;
@@ -21,8 +22,8 @@ public class DeleteExercisecontroller extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Exercise exercise = null;
         try {
-            exercise = Exercise.loadById(id);
-            exercise.delete();
+            exercise = ExerciseDao.loadById(id);
+            ExerciseDao.deleteExercise(exercise);
         }catch (SQLException e){
             e.printStackTrace();
         }

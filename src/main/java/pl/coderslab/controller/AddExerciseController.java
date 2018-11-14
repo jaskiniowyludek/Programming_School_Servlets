@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.ExerciseDao;
 import pl.coderslab.model.Exercise;
 
 import javax.servlet.ServletException;
@@ -17,7 +18,7 @@ public class AddExerciseController extends HttpServlet {
             Exercise exercise = new Exercise();
             exercise.setTitle(request.getParameter("title"));
             exercise.setDescription(request.getParameter("description"));
-            exercise.saveToDB();
+            ExerciseDao.addExercise(exercise);
         }catch (SQLException e){
             e.printStackTrace();
         }

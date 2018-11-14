@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.SolutionDao;
 import pl.coderslab.model.Solution;
 
 import javax.servlet.ServletException;
@@ -23,7 +24,7 @@ public class HomepageController extends HttpServlet {
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<Solution> solutions = Solution.loadAllSolutionsWithUserAndTitle();
+            List<Solution> solutions = SolutionDao.loadAllSolutionsWithUserAndTitle();
             request.setAttribute("solutions", solutions);
             getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
         } catch (SQLException e) {

@@ -1,5 +1,7 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.SolutionDao;
+import pl.coderslab.dao.UserDao;
 import pl.coderslab.model.Solution;
 import pl.coderslab.model.User;
 
@@ -24,8 +26,8 @@ public class UserController extends HttpServlet {
         User user = null;
         ArrayList<Solution> solutions = new ArrayList<>();
         try {
-            user= User.loadUserById(id);
-            solutions = Solution.loadAllByUserId(id);
+            user= UserDao.loadUserById(id);
+            solutions = SolutionDao.loadAllByUserId(id);
         }catch (SQLException e){
             e.printStackTrace();
         }
