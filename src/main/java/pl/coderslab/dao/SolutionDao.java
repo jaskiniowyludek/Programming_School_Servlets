@@ -5,6 +5,7 @@ import pl.coderslab.services.DbUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SolutionDao {
 
@@ -15,7 +16,12 @@ public class SolutionDao {
             PreparedStatement preparedStatement;
             String GeneretedColumns[] = {"ID"};
             preparedStatement = conn.prepareStatement(sql, GeneretedColumns);
-            preparedStatement.setObject(1, new Timestamp(solution.getCreated().getTime()));
+            preparedStatement.setTimestamp(1, new Timestamp(solution.getCreated().getTime()));
+            if (solution.getUpdated()==null) {
+                preparedStatement.setTimestamp(2, null);
+            } else {
+                preparedStatement.setTimestamp(2, new Timestamp(solution.getUpdated().getTime()));
+            }
             //  preparedStatement.setObject(2,new Timestamp(this.updated.getTime()));
             preparedStatement.setString(3, solution.getDescription());
             preparedStatement.setInt(4, solution.getExercise_id());
@@ -33,8 +39,11 @@ public class SolutionDao {
                      ", exercise_id=?, user_id=?	where	id	=	?";
              PreparedStatement preparedStatement;
              preparedStatement = conn.prepareStatement(sql);
-             //  preparedStatement.setObject(1,new Timestamp(this.created.getTime()));
-             preparedStatement.setObject(2, new Timestamp(solution.getUpdated().getTime()));
+             preparedStatement.setTimestamp(1, new Timestamp(solution.getCreated().getTime()));
+             if (solution.getUpdated()==null) {
+                 solution.setUpdated(new Date());
+                 preparedStatement.setTimestamp(2, new Timestamp(solution.getUpdated().getTime()));
+             }
              preparedStatement.setString(3, solution.getDescription());
              preparedStatement.setInt(4, solution.getExercise_id());
              preparedStatement.setInt(5, solution.getUser_id());
@@ -66,8 +75,8 @@ public class SolutionDao {
     public static ArrayList<Solution> loadAllSolutionsWithUserAndTitle()throws SQLException{
         try (Connection conn = DbUtil.getConn()){
             String sql = "SELECT Solution.id, Exercise.title, Solution.exercise_id, User.username, Solution.created," +
-                    "Solution.description from Solution JOIN Exercise ON Solution.exercise_id=Exercise.id JOIN" +
-                    " User On Solution.user_id=User.id";
+                    "Solution.description, Solution.updated from Solution JOIN Exercise ON Solution.exercise_id=Exercise.id JOIN" +
+                    " User On Solution.user_id=User.id WHERE Solution.description IS not null";
             ArrayList<Solution> solutions = new ArrayList<Solution>();
             PreparedStatement preparedStatement;
             preparedStatement = conn.prepareStatement(sql);
@@ -76,6 +85,7 @@ public class SolutionDao {
                 Solution loadedSOL = new Solution();
                 loadedSOL.setId(resultSet.getInt("id"));
                 loadedSOL.setCreated(resultSet.getTimestamp("created"));
+                loadedSOL.setUpdated(resultSet.getTimestamp("updated"));
                 loadedSOL.setExerciseTitle(resultSet.getString("title"));
                 loadedSOL.setDescription(resultSet.getString("description"));
                 loadedSOL.setUsername(resultSet.getString("username"));
@@ -145,7 +155,8 @@ public class SolutionDao {
     public static ArrayList<Solution> loadAllByUserId(int userID) throws SQLException {
         try (Connection conn = DbUtil.getConn()) {
             ArrayList<Solution> solutions = new ArrayList<Solution>();
-            String sql = "SELECT * FROM Solution WHERE user_id=?";
+            String sql = "SELECT * FROM Solution JOIN Exercise ON Solution.exercise_id=Exercise.id " +
+                    "WHERE Solution.user_id=?";
             PreparedStatement preparedStatement;
             preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, userID);
@@ -155,6 +166,8 @@ public class SolutionDao {
                 loadedSOL.setId(rs.getInt("id"));
                 loadedSOL.setCreated(rs.getTimestamp("created"));
                 loadedSOL.setUpdated(rs.getTimestamp("updated"));
+                loadedSOL.setDescription(rs.getString("description"));
+                loadedSOL.setExerciseTitle(rs.getString("title"));
                 loadedSOL.setDescription(rs.getString("description"));
                 loadedSOL.setUser_id(rs.getInt("user_id"));
                 loadedSOL.setExercise_id(rs.getInt("exercise_id"));

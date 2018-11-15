@@ -20,11 +20,13 @@
     <li>Email: ${user.email}</li>
 </ul>
 
-<h2>Solutions added by this user:</h2>
+<h2>Exercises assigned to this user: </h2>
 <ul>
     <li>
     <c:forEach items="${solutions}" var="solution">
         <ol>
+            <li><a href="/addSolutionToExercise?id=${solution.id}">Add solution to this exercise</a> </li>
+            <li>Exercise title: ${solution.exerciseTitle}</li>
             <li>Exercise created: ${solution.created}</li>
             <li>Solution added: ${solution.updated}</li>
             <li>Solution: ${solution.description}</li>

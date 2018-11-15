@@ -1,15 +1,12 @@
 package pl.coderslab.model;
 
-import pl.coderslab.services.DbUtil;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Solution {
     private  int id;
-    private java.util.Date created;
-    private java.util.Date updated;
+    private java.util.Date created = new Date();
+    private java.util.Date updated = new Date();
     private String description;
     private int exercise_id;
     private int user_id;
